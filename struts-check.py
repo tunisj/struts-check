@@ -29,11 +29,11 @@ if len(sys.argv) <= 1:
 parser = argparse.ArgumentParser()
 parser.add_argument("-u", "--url",
                     dest="url",
-                    help="Check a single URL",
+                    help="Check single URL",
                     action='store')
 parser.add_argument("-l", "--list",
                     dest="usedlist",
-                    help="Check a list of URLs.",
+                    help="Check list of URLs",
 		    action='store')	  
 parser.add_argument("--check",
                     dest="do_check",
