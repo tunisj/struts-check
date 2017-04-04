@@ -22,7 +22,7 @@ except:
 
 if len(sys.argv) <= 1:
     print('[*] CVE: 2017-5638 - Apache Struts2 S2-045')
-    print('[*] struts-check )
+    print('[*] struts-check ')
     print('\n%s -h for help.' % (sys.argv[0]))
     exit(0)
 
@@ -42,7 +42,6 @@ parser.add_argument("--check",
 args = parser.parse_args()
 url = args.url if args.url else None
 usedlist = args.usedlist if args.usedlist else None
-url = args.url if args.url else None	  
 do_check = args.do_check if args.do_check else None
 
 def url_prepare(url):
@@ -52,6 +51,7 @@ def url_prepare(url):
         url = str('https') + str('://') + str(url)
     return(url)
 
+	
 def check(url):
     url = url_prepare(url)
     print('\n[*] URL: %s' % (url))
@@ -79,50 +79,45 @@ def check(url):
     return(result)
 
 def main(url=url, usedlist=usedlist, do_check=do_check):
-	  
-    if url:
-        if do_check:
-            result = check(url)  # Only check for existence of Vulnerablity
-            output = '[*] Status: '
-            if result is True:
-                output += 'Vulnerable!'
-            else:
-                output += 'Not Affected.'
-        print(output)
-		
-	print('[*] Done.')
-	  
-    if usedlist:
-        URLs_List = []
-        try:
-            f_file = open(str(usedlist), 'r')
-            URLs_List = f_file.read().replace('\r', '').split('\n')
-            try:
-                URLs_List.remove('')
-            except ValueError:
-                pass
-                f_file.close()
-        except:
-            print('Error: There was an error in reading list file.')
-            exit(1)
-        for url in URLs_List:
-            if do_check:
-                result = check(url)  # Only check for existence of Vulnerablity
-                output = '[*] Status: '
-                if result is True:
-                    output += 'Vulnerable!'
-                else:
-                    output += 'Not Affected.'
-            else:
-                output = exploit(url, cmd)  # Exploit
-         print(output)
+	if url:
+		if do_check:
+			result = check(url)  # Only check for existence of Vulnerablity
+			output = '[*] Status: '
+			if result is True:
+				output += 'Vulnerable!'
+			else:
+				output += 'Not Affected.'
+		print(output)
+			  
+	if usedlist:
+		URLs_List = []
+		try:
+			f_file = open(str(usedlist), 'r')
+			URLs_List = f_file.read().replace('\r', '').split('\n')
+			try:
+				URLs_List.remove('')
+			except ValueError:
+				pass
+				f_file.close()
+		except:
+			print('Error: There was an error in reading list file.')
+			exit(1)
+		for url in URLs_List:
+			if do_check:
+				result = check(url)  # Only check for existence of Vulnerablity
+				output = '[*] Status: '
+				if result is True:
+					output += 'Vulnerable!'
+				else:
+					output += 'Not Affected.'
+		print(output)
 
-	 print('[%] Done.')
+	print('[%] Done.')
 	  
-    if __name__ == '__main__':
-    	try:
-        	main(url=url, usedlist=usedlist, do_check=do_check)
-    	except KeyboardInterrupt:
-        	print('\nKeyboardInterrupt Detected.')
-        	print('Exiting...')
-	exit(0)
+if __name__ == '__main__':
+	try:
+		main(url=url, usedlist=usedlist, do_check=do_check)
+	except KeyboardInterrupt:
+		print('\nKeyboardInterrupt Detected.')
+		print('Exiting...')
+		exit(0)
