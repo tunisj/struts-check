@@ -31,12 +31,18 @@ parser.add_argument("-u", "--url",
                     dest="url",
                     help="Check a single URL",
                     action='store')
+parser.add_argument("-l", "--list",
+                    dest="usedlist",
+                    help="Check a list of URLs.",
+		    action='store')	  
 parser.add_argument("--check",
                     dest="do_check",
                     help="Check if a target is vulnerable",
                     action='store_true')
 args = parser.parse_args()
 url = args.url if args.url else None
+usedlist = args.usedlist if args.usedlist else None
+url = args.url if args.url else None	  
 do_check = args.do_check if args.do_check else None
 
 def url_prepare(url):
@@ -72,7 +78,8 @@ def check(url):
         result = False
     return(result)
 
-def main(url=url, do_check=do_check):
+def main(url=url, usedlist=usedlist, do_check=do_check):
+	  
     if url:
         if do_check:
             result = check(url)  # Only check for existence of Vulnerablity
@@ -84,11 +91,38 @@ def main(url=url, do_check=do_check):
         print(output)
 		
 	print('[*] Done.')
+	  
+    if usedlist:
+        URLs_List = []
+        try:
+            f_file = open(str(usedlist), 'r')
+            URLs_List = f_file.read().replace('\r', '').split('\n')
+            try:
+                URLs_List.remove('')
+            except ValueError:
+                pass
+                f_file.close()
+        except:
+            print('Error: There was an error in reading list file.')
+            exit(1)
+        for url in URLs_List:
+            if do_check:
+                result = check(url)  # Only check for existence of Vulnerablity
+                output = '[*] Status: '
+                if result is True:
+                    output += 'Vulnerable!'
+                else:
+                    output += 'Not Affected.'
+            else:
+                output = exploit(url, cmd)  # Exploit
+         print(output)
 
-if __name__ == '__main__':
-    try:
-        main(url=url, do_check=do_check)
-    except KeyboardInterrupt:
-        print('\nKeyboardInterrupt Detected.')
-        print('Exiting...')
-exit(0)
+	 print('[%] Done.')
+	  
+    if __name__ == '__main__':
+    	try:
+        	main(url=url, usedlist=usedlist, do_check=do_check)
+    	except KeyboardInterrupt:
+        	print('\nKeyboardInterrupt Detected.')
+        	print('Exiting...')
+	exit(0)
