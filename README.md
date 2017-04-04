@@ -8,6 +8,9 @@
 ## Checking if the vulnerability exists against a single URL. ##
 `python struts-check.py --check --url 'http://example.com/struts2-showcase/index.action'`
 
+## Check List of URLs. ##
+`python struts-check.py --check --list 'urls.txt'`
+
 # **Requirements** #
 * Python2 or Python3
 * requests
