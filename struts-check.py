@@ -130,7 +130,6 @@ def main(url=url, usedlist=usedlist, do_check=do_check):
                     output = exploit(url, cmd)  # Exploit
                 print(output)
 
-print('[%] Done.')
 
 	  
 if __name__ == '__main__':
