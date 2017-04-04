@@ -44,6 +44,19 @@ url = args.url if args.url else None
 usedlist = args.usedlist if args.usedlist else None
 do_check = args.do_check if args.do_check else None
 
+def banner():
+	banner = """
+     _              _                  _               _    
+    | |            | |                | |             | |   
+ ___| |_ _ __ _   _| |_ ___ ______ ___| |__   ___  ___| | __
+/ __| __| '__| | | | __/ __|______/ __| '_ \ / _ \/ __| |/ /
+\__ \ |_| |  | |_| | |_\__ \     | (__| | | |  __/ (__|   < 
+|___/\__|_|   \__,_|\__|___/      \___|_| |_|\___|\___|_|\_\
+                                                            
+ """
+	return banner
+
+
 def url_prepare(url):
     url = url.replace('#', '%23')
     url = url.replace(' ', '%20')
@@ -79,6 +92,7 @@ def check(url):
     return(result)
 
 def main(url=url, usedlist=usedlist, do_check=do_check):
+	print banner()
 	if url:
 		if do_check:
 			result = check(url)  # Only check for existence of Vulnerablity
@@ -112,7 +126,7 @@ def main(url=url, usedlist=usedlist, do_check=do_check):
 					output += 'Not Affected.'
 		print(output)
 
-	print('[%] Done.')
+	print('[*] Done.')
 	  
 if __name__ == '__main__':
 	try:
@@ -120,4 +134,4 @@ if __name__ == '__main__':
 	except KeyboardInterrupt:
 		print('\nKeyboardInterrupt Detected.')
 		print('Exiting...')
-		exit(0)
+exit(0)
